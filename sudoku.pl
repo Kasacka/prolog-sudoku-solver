@@ -9,3 +9,13 @@ Uses <a href="http://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages
 @date 23/10/2016
 @version 0.0.1
 */
+
+/**
+ * Returns a list of numbers allowed in a given grid.
+ *
+ * If it is a 4x4 grid, this returns [1,2,3,4].
+ */
+numbers(Grid, L) :-
+    length(Grid, X),
+    Y is round(sqrt(X)),
+    numlist(1,Y, L).
