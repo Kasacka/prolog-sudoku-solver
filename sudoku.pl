@@ -29,26 +29,31 @@ Uses <a href="http://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages
  *   [6,4,2, 5,9,8, 1,7,3]
  * ]
  *
- * @arg list Puzzle to solve.
+ * @arg Puzzle The puzzle to solve.
+ * @arg Solution Holds the eventual solution of the puzzle.
  */
-sudoku(L) :-
-    maplist(isValid, L),
-    flip(L, L2), maplist(isValid, L2),
-    boxes(L, L3), maplist(isValid, L3),
+sudoku(Puzzle, Solution) :-
+    Solution = Puzzle,
+    maplist(isValid, Solution),
+    flip(Solution, L2), maplist(isValid, L2),
+    boxes(Solution, L3), maplist(isValid, L3),
     !.
 
 /**
- * Flips a list
+ * Flips a list.
  */
 flip([[]|_], []) :-
     !.
-flip(List, [Head|Tail]) :- getFirst(List, Head, B), flip(B, Tail).
+flip(List, [Head|Tail]) :-
+    getFirst(List, Head, B),
+    flip(B, Tail).
 
 /**
  * Picks the first item.
  */
 getFirst([], [], []).
-getFirst([[Head|Tail]|R],[Head|Heads],[Tail|Tails]) :- getFirst(R,Heads,Tails).
+getFirst([[Head|Tail]|R],[Head|Heads],[Tail|Tails]) :-
+    getFirst(R,Heads,Tails).
 
 /**
  * Maps the input list to a new list according to the 3x3 boxes.
